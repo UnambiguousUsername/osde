@@ -48,6 +48,71 @@ if command -v python3 &> /dev/null; then
 else
     [[ "${verbose}" = true ]] && say "Installing Python3."
     [[ "${log}" = true ]] && say "Installing Python3." >> "${log_file_path}"
+    apt-get install -y python3.10
+    if command -v python3 &> /dev/null; then
+        [[ "${verbose}" = true ]] && say "Python3 was installed."
+        [[ "${log}" = true ]] && say "Python3 was installed." >> "${log_file_path}"
+    else
+        [[ "${verbose}" = true ]] && say "Failed to install Python3."
+        [[ "${log}" = true ]] && say "Failed to install Python3." >> "${log_file_path}"
+    fi
 fi
+
+# check for pip
+if command -v pip &> /dev/null; then
+    [[ "${verbose}" = true ]] && say "Pip is installed."
+    [[ "${log}" = true ]] && say "Pip is installed." >> "${log_file_path}"
+else
+    [[ "${verbose}" = true ]] && say "Installing Pip."
+    [[ "${log}" = true ]] && say "Installing Pip." >> "${log_file_path}"
+    apt-get install python3-pip
+    if command -v pip &> /dev/null; then
+        [[ "${verbose}" = true ]] && say "Pip was installed."
+        [[ "${log}" = true ]] && say "Pip was installed." >> "${log_file_path}"
+    else
+        [[ "${verbose}" = true ]] && say "Failed to install Pip."
+        [[ "${log}" = true ]] && say "Failed to install Pip." >> "${log_file_path}"
+    fi
+fi
+
+# check for postgresql
+if command -v psql &> /dev/null; then
+    [[ "${verbose}" = true ]] && say "Postgresql is installed."
+    [[ "${log}" = true ]] && say "Postgresql is installed." >> "${log_file_path}"
+else
+    [[ "${verbose}" = true ]] && say "Installing Postgresql."
+    [[ "${log}" = true ]] && say "Installing Postgresql." >> "${log_file_path}"
+    apt-get install -y postgresql
+    if command -v psql &> /dev/null; then
+        [[ "${verbose}" = true ]] && say "Postgresql was installed."
+        [[ "${log}" = true ]] && say "Postgresql was installed." >> "${log_file_path}"
+    else
+        [[ "${verbose}" = true ]] && say "Failed to install Postgresql."
+        [[ "${log}" = true ]] && say "Failed to install Postgresql." >> "${log_file_path}"
+    fi
+fi
+
+# check for apache airflow
+if command -v airflow &> /dev/null; then
+    [[ "${verbose}" = true ]] && say "Apache Airflow is installed."
+    [[ "${log}" = true ]] && say "Apache Airflow is installed." >> "${log_file_path}"
+else
+    [[ "${verbose}" = true ]] && say "Installing Apache Airflow."
+    [[ "${log}" = true ]] && say "Installing Apache Airflow." >> "${log_file_path}"
+    python3 -m pip install apache-airflow
+    if command -v airflow &> /dev/null; then
+        [[ "${verbose}" = true ]] && say "Apache Airflow was installed."
+        [[ "${log}" = true ]] && say "Apache Airflow was installed." >> "${log_file_path}"
+    else
+        [[ "${verbose}" = true ]] && say "Failed to install Apache Airflow."
+        [[ "${log}" = true ]] && say "Failed to install Apache Airflow." >> "${log_file_path}"
+    fi
+fi
+
+# postgresql setup
+
+
+# apache airflow setup
+
 
 printf "fin"
