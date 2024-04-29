@@ -105,7 +105,6 @@ else
     fi
 fi
 
-
 # check for venv directory
 if [ -d "${venv_path}" ]; then
     [[ "${verbose}" = true ]] && say 'Venv directory found.'
