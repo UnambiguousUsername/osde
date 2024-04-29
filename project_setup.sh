@@ -36,9 +36,14 @@ sudo true && say 'Nice.' || { say 'Su privilege is necessary for me to work, bye
 # create log file
 if [ -v log_file_path ]; then
     if [ ! -f "${log_file_path}" ]; then
-        touch "${log_file_path}" &> /dev/null &&
-            [[ "${verbose}" = true ]] && say 'Created log file.' && log=true ||
-            [[ "${verbose}" = true ]] && say 'Unable to create log file.' && log=false
+        touch "${log_file_path}" &> /dev/null
+        if [ -f "${log_file_path}" ]; then
+            [[ "${verbose}" = true ]] && say 'Created log file.'
+            log=true
+        else
+            [[ "${verbose}" = true ]] && say 'Unable to create log file.'
+            log=false
+        fi
     else
         [[ "${verbose}" = true ]] && say 'Log file already exists.' && log=true
     fi
