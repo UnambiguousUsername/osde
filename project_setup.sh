@@ -20,9 +20,9 @@ do
     esac
 done
 
-log_file_path = "${directory_path}/project_setup.log"
-venv_path = "${directory_path}/venv/"
-venv_source_path = "${venv_path}/bin/activate"
+log_file_path="${directory_path}/project_setup.log"
+venv_path="${directory_path}/venv/"
+venv_source_path="${venv_path}/bin/activate"
 
 # printf function so i dont need to type newline for every string
 say(){
