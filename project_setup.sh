@@ -22,16 +22,12 @@ done
 
 log_file_path="${directory_path}/project_setup.log"
 venv_path="${directory_path}/venv/"
-venv_source_path="${venv_path}/bin/activate"
+venv_source_path="${venv_path}bin/activate"
 
 # printf function so i dont need to type newline for every string
 say(){
     { date +"%F %T" | tr -d "\n"; printf " - $1\n"; }
 }
-
-# check for sudo privilege
-say 'Checking for su.'
-sudo true && say 'Nice.' || { say 'Su privilege is necessary for me to work, bye.'; exit 1; } 
 
 # create log file
 if [ -v log_file_path ]; then
@@ -105,6 +101,23 @@ else
     fi
 fi
 
+# check for python venv
+if python3 -m venv -h | grep 'bootstrapped' &> /dev/null; then
+    [[ "${verbose}" = true ]] && say 'Python3-venv is installed.'
+    [[ "${log}" = true ]] && say 'Python3-venv is installed.' >> "${log_file_path}"
+else
+    [[ "${verbose}" = true ]] && say 'Installing Python3-venv.'
+    [[ "${log}" = true ]] && say 'Installing Python3-venv.' >> "${log_file_path}"
+    apt-get install -y python3-venv &> /dev/null
+    if python3 -m venv -h | grep 'bootstrapped' &> /dev/null; then
+        [[ "${verbose}" = true ]] && say 'Python3-venv was installed.'
+        [[ "${log}" = true ]] && say 'Python3-venv was installed.' >> "${log_file_path}"
+    else
+        [[ "${verbose}" = true ]] && say 'Failed to install Python3-venv.'
+        [[ "${log}" = true ]] && say 'Failed to install Python3-venv.' >> "${log_file_path}"
+    fi
+fi
+
 # check for venv directory
 if [ -d "${venv_path}" ]; then
     [[ "${verbose}" = true ]] && say 'Venv directory found.'
@@ -123,15 +136,15 @@ else
     fi
 fi
 
-# check for venv
-if [ -d "${venv_source_path}" ]; then
+# check for project venv
+if [ -f "${venv_source_path}" ]; then
     [[ "${verbose}" = true ]] && say 'Venv found.'
     [[ "${log}" = true ]] && say 'Venv found.' >> "${log_file_path}"
 else
     [[ "${verbose}" = true ]] && say 'Creating venv.'
     [[ "${log}" = true ]] && say 'Creating venv.' >> "${log_file_path}"
-    python3 -m venv "${venv_path}" &> /dev/null
-    if [ -d "${venv_source_path}" ]; then
+    python3 -m venv "${venv_path}"
+    if [ -f "${venv_source_path}" ]; then
         [[ "${verbose}" = true ]] && say 'Venv created.'
         [[ "${log}" = true ]] && say 'Venv created.' >> "${log_file_path}"
     else
@@ -143,7 +156,7 @@ fi
 
 # switch to venv
 source "${venv_source_path}" &> /dev/null
-if command -v python3 | grep "${venv_source_path}" &> /dev/null; then
+if command -v python3 | grep "${venv_path}" &> /dev/null; then
     [[ "${verbose}" = true ]] && say 'Switch to venv successful.'
     [[ "${log}" = true ]] && say 'Switch to venv successful.' >> "${log_file_path}"
 else
