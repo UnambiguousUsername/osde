@@ -31,7 +31,7 @@ say(){
 
 # check for sudo privilege
 say 'Checking for su.'
-sudo true && say 'Nice.' || say 'Su privilege is necessary for me to work, bye.' && exit 1
+sudo true && say 'Nice.' || say 'Su privilege is necessary for me to work, bye.'; exit 1 
 
 # create log file
 if [ -v log_file_path ]; then
