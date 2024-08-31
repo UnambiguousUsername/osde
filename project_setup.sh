@@ -9,20 +9,23 @@ Options:
     -v      Print out informational messages during execution.
 "
 
+# where we is
+readonly directory_path="$(dirname $(readlink -f "${0}"))"
+
 # look at supplied arguments
 while getopts hlv option
 do
     case $option in
         h) echo "${help}"; exit 0;;
-        l) readonly directory_path="$(dirname $(readlink -f "${0}"))";;
-        v) verbose=true;;
+        l) readonly log_file_path="${directory_path}/project_setup.log"
+        v) readonly verbose=true;;
         *) echo 'Unknown flags supplied.';;
     esac
 done
 
-log_file_path="${directory_path}/project_setup.log"
-venv_path="${directory_path}/venv/"
-venv_source_path="${venv_path}bin/activate"
+# construct file paths
+readonly venv_path="${directory_path}/venv/"
+readonly venv_source_path="${venv_path}bin/activate"
 
 # printf function so i dont need to type newline for every string
 say(){
@@ -30,7 +33,7 @@ say(){
 }
 
 # create log file
-if [ -v log_file_path ]; then
+if [ -v logging ]; then
     if [ ! -f "${log_file_path}" ]; then
         touch "${log_file_path}" &> /dev/null
         if [ -f "${log_file_path}" ]; then
