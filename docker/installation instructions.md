@@ -15,13 +15,13 @@ Followed some of the steps located [here](https://oneuptime.com/blog/post/2026-0
 13. `sudo docker run hello-world`
 14. `sudo usermod -aG docker $USER`
 15. `sudo nano /etc/docker/daemon.json` 
->`{`
->`  "features": {`
->`    "buildkit": true`
->`  },`
->`  "log-driver": "json-file",`
->`  "log-opts": {`
->`    "max-size": "10m",`
->`    "max-file": "3"`
->`  }`
->`}`
+`{`  
+`    "features": {`  
+`        "buildkit": true`  
+`    },`  
+`    "log-driver": "json-file",`  
+`    "log-opts": {`  
+`        "max-size": "10m",`  
+`        "max-file": "3"`  
+`    }`  
+`}`  
