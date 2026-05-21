@@ -11,9 +11,10 @@ Followed some of the steps located [here](https://oneuptime.com/blog/post/2026-0
 9. `sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin`
 10. `sudo systemctl start docker`
 11. `sudo systemctl enable docker`
-12. `sudo docker run hello-world`
-13. `sudo usermod -aG docker $USER`
-14. `sudo nano /etc/docker/daemon.json` 
+12. `sudo docker login`
+13. `sudo docker run hello-world`
+14. `sudo usermod -aG docker $USER`
+15. `sudo nano /etc/docker/daemon.json` 
 >`{`
 >`  "features": {`
 >`    "buildkit": true`
